@@ -13,10 +13,10 @@ manifests=(
 
 for manifest in "${manifests[@]}"; do
   echo "Deleting $manifest..."
-  kubectl delete -f "./resources/$manifest"
+  kubectl delete -f "../resources/$manifest"
 done
 
 echo "Deleting namespace.yaml..."
-kubectl delete -f ./namespace/namespace.yaml
+kubectl delete -f ../namespace/namespace.yaml
 
 echo "All manifests have been deleted."

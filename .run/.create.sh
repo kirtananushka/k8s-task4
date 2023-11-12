@@ -12,13 +12,14 @@ manifests=(
 )
 
 echo "Creating namespace.yaml..."
-kubectl create -f ./namespace/namespace.yaml
+kubectl create -f ../namespace/namespace.yaml
 
 for manifest in "${manifests[@]}"; do
   echo "Creating $manifest..."
-  kubectl create -f "./resources/$manifest"
+  kubectl create -f "../resources/$manifest"
 done
 
+echo
 echo "All manifests have been created."
 echo
 
