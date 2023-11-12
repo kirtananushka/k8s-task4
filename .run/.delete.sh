@@ -20,4 +20,7 @@ done
 echo "Deleting namespace.yaml..."
 kubectl delete -f ../namespace/namespace.yaml
 
+echo
 echo "All manifests have been deleted."
+echo
+kubectl get pods -n=ktask
