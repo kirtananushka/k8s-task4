@@ -1,0 +1,57 @@
+###
+
+# curl --location 'http://localhost:8071'
+GET http://localhost:8071
+
+###
+
+# curl --location 'http://localhost:8072'
+GET http://localhost:8072
+
+###
+
+# curl --location 'http://localhost:8071/resources'
+#--header 'Content-Type: audio/mpeg'
+#--data '@/C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/across.mp3'
+POST http://localhost:8071/resources
+Content-Type: audio/mpeg
+
+< /C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/across.mp3
+
+###
+
+# curl --location 'http://localhost:8071/resources/1'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+GET http://localhost:8071/resources/1
+Content-Type: audio/mpeg
+
+###
+
+# curl --location 'http://localhost:8072/songs/1'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+GET http://localhost:8072/songs/1
+Content-Type: audio/mpeg
+
+###
+
+# curl --location 'http://localhost:8071/resources'
+#--header 'Content-Type: audio/mpeg'
+#--data '@/C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/bate.mp3'
+POST http://localhost:8071/resources
+Content-Type: audio/mpeg
+
+< /C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/bate.mp3
+
+###
+
+# curl --location --request DELETE 'http://localhost:8071/resources?id=2'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+DELETE http://localhost:8071/resources?id=2
+Content-Type: audio/mpeg
+
+###
+
+
