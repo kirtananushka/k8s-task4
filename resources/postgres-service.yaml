@@ -4,13 +4,13 @@ metadata:
   name: resource-db
   namespace: ktask
 spec:
+  type: ClusterIP
   selector:
     app: resource-db
   ports:
     - protocol: TCP
       port: 5432
       targetPort: 5432
-  clusterIP: None
 ---
 apiVersion: v1
 kind: Service
@@ -18,10 +18,10 @@ metadata:
   name: song-db
   namespace: ktask
 spec:
+  type: ClusterIP
   selector:
     app: song-db
   ports:
     - protocol: TCP
       port: 5432
       targetPort: 5432
-  clusterIP: None
