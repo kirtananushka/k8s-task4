@@ -1,4 +1,5 @@
 #!/bin/bash
+# Creates all manifests
 
 manifests=(
   "db-secret.yaml"

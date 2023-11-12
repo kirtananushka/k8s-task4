@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgres-initdb-config
+  name: resource-db-init-config
   namespace: ktask
 data:
   init-resource-svc-db.sql: |
@@ -12,7 +12,13 @@ data:
     id         SERIAL PRIMARY KEY,
     audio_data BYTEA NOT NULL
     );
-
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: song-db-init-config
+  namespace: ktask
+data:
   init-song-svc-db.sql: |
     CREATE DATABASE song_svc_db;
     \c song_svc_db;

@@ -21,17 +21,17 @@ spec:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
+                  name: resource-db-secret
                   key: DB_HOST
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
+                  name: resource-db-secret
                   key: DB_USERNAME
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
+                  name: resource-db-secret
                   key: DB_PASSWORD
             - name: SONG_SVC
               value: "song-svc"

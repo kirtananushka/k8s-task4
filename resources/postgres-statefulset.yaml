@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres
+  name: resource-db
   namespace: ktask
 spec:
-  serviceName: postgres
+  serviceName: resource-db
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: resource-db
   template:
     metadata:
       labels:
-        app: postgres
+        app: resource-db
     spec:
       containers:
         - name: postgres
@@ -21,27 +21,72 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db-secret
+                  name: resource-db-secret
                   key: POSTGRES_PASSWORD
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: postgres-db
+            - name: resource-db-storage
               mountPath: /var/lib/postgresql/data
-            - name: initdb
+            - name: initdb-resource
               mountPath: /docker-entrypoint-initdb.d/init-resource-svc-db.sql
               subPath: init-resource-svc-db.sql
-            - name: initdb
-              mountPath: /docker-entrypoint-initdb.d/init-song-svc-db.sql
-              subPath: init-song-svc-db.sql
       volumes:
-        - name: initdb
+        - name: initdb-resource
           configMap:
-            name: postgres-initdb-config
+            name: resource-db-init-config
             defaultMode: 0744
   volumeClaimTemplates:
     - metadata:
-        name: postgres-db
+        name: resource-db-storage
+      spec:
+        storageClassName: hostpath
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 100Mi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: song-db
+  namespace: ktask
+spec:
+  serviceName: song-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: song-db
+  template:
+    metadata:
+      labels:
+        app: song-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:alpine
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: song-db-secret
+                  key: POSTGRES_PASSWORD
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: song-db-storage
+              mountPath: /var/lib/postgresql/data
+            - name: initdb-song
+              mountPath: /docker-entrypoint-initdb.d/init-song-svc-db.sql
+              subPath: init-song-svc-db.sql
+      volumes:
+        - name: initdb-song
+          configMap:
+            name: song-db-init-config
+            defaultMode: 0744
+  volumeClaimTemplates:
+    - metadata:
+        name: song-db-storage
       spec:
         storageClassName: hostpath
         accessModes: ["ReadWriteOnce"]

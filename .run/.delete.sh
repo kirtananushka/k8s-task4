@@ -1,4 +1,5 @@
 #!/bin/bash
+# Deletes all manifests
 
 manifests=(
   "resource-svc-deployment.yaml"
