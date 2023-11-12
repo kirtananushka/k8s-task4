@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-svc
+  namespace: ktask
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: resource-svc
+  template:
+    metadata:
+      labels:
+        app: resource-svc
+    spec:
+      containers:
+        - name: resource-svc
+          image: resource-svc
+          imagePullPolicy: Never
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_HOST
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: DB_PASSWORD
+            - name: SONG_SVC
+              value: "song-svc"
+          ports:
+            - containerPort: 8071
