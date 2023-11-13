@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: song-svc
-          image: song-svc
-          imagePullPolicy: Never
+          image: irrisorrimus/song-svc
+          imagePullPolicy: IfNotPresent
           env:
             - name: DB_HOST
               valueFrom:

@@ -15,8 +15,8 @@ spec:
     spec:
       containers:
         - name: resource-svc
-          image: resource-svc
-          imagePullPolicy: Never
+          image: irrisorrimus/resource-svc
+          imagePullPolicy: IfNotPresent
           env:
             - name: DB_HOST
               valueFrom:
