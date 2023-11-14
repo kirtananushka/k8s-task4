@@ -17,21 +17,8 @@ spec:
         - name: song-svc
           image: irrisorrimus/song-svc
           imagePullPolicy: IfNotPresent
-          env:
-            - name: DB_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: song-db-secret
-                  key: DB_HOST
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: song-db-secret
-                  key: DB_USERNAME
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: song-db-secret
-                  key: DB_PASSWORD
+          envFrom:
+            - secretRef:
+                name: song-db-secret
           ports:
             - containerPort: 8072
