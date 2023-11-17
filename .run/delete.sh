@@ -10,15 +10,13 @@ manifests=(
   "postgres-service.yaml"
   "config-map.yaml"
   "db-secret.yaml"
+  "namespace.yaml"
 )
 
 for manifest in "${manifests[@]}"; do
   echo "Deleting $manifest..."
   kubectl delete -f "../resources/$manifest"
 done
-
-echo "Deleting namespace.yaml..."
-kubectl delete -f ../namespace/namespace.yaml
 
 echo
 echo "All manifests have been deleted."

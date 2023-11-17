@@ -2,6 +2,7 @@
 # Creates all manifests
 
 manifests=(
+  "namespace.yaml"
   "db-secret.yaml"
   "config-map.yaml"
   "postgres-service.yaml"
@@ -11,9 +12,6 @@ manifests=(
   "resource-svc-service.yaml"
   "resource-svc-deployment.yaml"
 )
-
-echo "Creating namespace.yaml..."
-kubectl create -f ../namespace/namespace.yaml
 
 for manifest in "${manifests[@]}"; do
   echo "Creating $manifest..."
