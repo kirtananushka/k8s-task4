@@ -1,22 +1,10 @@
 #!/bin/bash
-# Creates all manifests
+# Creates all manifests using kustomization.yaml
 
-manifests=(
-  "namespace.yaml"
-  "db-secret.yaml"
-  "config-map.yaml"
-  "postgres-service.yaml"
-  "song-svc-service.yaml"
-  "song-svc-deployment.yaml"
-  "postgres-statefulset.yaml"
-  "resource-svc-service.yaml"
-  "resource-svc-deployment.yaml"
-)
+echo "Applying kustomization.yaml to create all manifests..."
+echo
 
-for manifest in "${manifests[@]}"; do
-  echo "Creating $manifest..."
-  kubectl create -f "../resources/$manifest"
-done
+kubectl apply -k ../resources
 
 echo
 echo "All manifests have been created."
