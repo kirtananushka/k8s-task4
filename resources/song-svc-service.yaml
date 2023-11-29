@@ -10,5 +10,5 @@ spec:
     app: song-svc
   ports:
     - protocol: TCP
-      port: 8072
-      targetPort: 8072
+      port: 8080
+      targetPort: 8080

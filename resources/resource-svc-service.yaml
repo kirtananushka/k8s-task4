@@ -10,5 +10,5 @@ spec:
     app: resource-svc
   ports:
     - protocol: TCP
-      port: 8071
-      targetPort: 8071
+      port: 8080
+      targetPort: 8080

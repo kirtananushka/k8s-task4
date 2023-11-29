@@ -10,12 +10,12 @@ kubectl port-forward song-db-0 5433:5432 -n=ktask &
 
 # resource-svc
 resource_svc_pod=$(kubectl get pods -l app=resource-svc -n=ktask -o jsonpath="{.items[0].metadata.name}")
-echo "Port forwarding for $resource_svc_pod on 8071:8071"
-kubectl port-forward "$resource_svc_pod" 8071:8071 -n=ktask &
+echo "Port forwarding for $resource_svc_pod on 8071:8080"
+kubectl port-forward "$resource_svc_pod" 8071:8080 -n=ktask &
 
 # song-svc
 song_svc_pod=$(kubectl get pods -l app=song-svc -n=ktask -o jsonpath="{.items[0].metadata.name}")
-echo "Port forwarding for $song_svc_pod on 8072:8072"
-kubectl port-forward "$song_svc_pod" 8072:8072 -n=ktask &
+echo "Port forwarding for $song_svc_pod on 8072:8080"
+kubectl port-forward "$song_svc_pod" 8072:8080 -n=ktask &
 
 wait

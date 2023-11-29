@@ -1,0 +1,122 @@
+###
+
+# curl --location 'http://localhost:8071'
+GET http://localhost:8071
+
+> {%
+    client.test("resource-svc is ok", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location 'http://localhost:8071/actuator/health'
+GET http://localhost:8071/actuator/health
+
+> {%
+    client.test("resource-svc is UP", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location 'http://localhost:8072'
+GET http://localhost:8072
+
+> {%
+    client.test("song-svc is ok", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location 'http://localhost:8072/actuator/health'
+GET http://localhost:8072/actuator/health
+
+> {%
+    client.test("song-svc is UP", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location 'http://localhost:8071/resources'
+#--header 'Content-Type: audio/mpeg'
+#--data '@/C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/across.mp3'
+POST http://localhost:8071/resources
+Content-Type: audio/mpeg
+
+< /C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/across.mp3
+
+> {%
+    client.test("POST http://localhost:8071/resources", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location 'http://localhost:8071/resources/1'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+GET http://localhost:8071/resources/1
+Content-Type: audio/mpeg
+
+> {%
+    client.test("GET http://localhost:8071/resources/1", function() {
+        client.assert(response.status === 200);
+        const contentType = response.headers.valueOf("content-type");
+        client.assert(contentType == "audio/mpeg",
+            `Expected Content-Type is audio/mpeg, but actual is ${contentType}`)
+    });
+%}
+
+###
+
+# curl --location 'http://localhost:8072/songs/1'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+GET http://localhost:8072/songs/1
+Content-Type: audio/mpeg
+
+> {%
+    client.test("POST http://localhost:8072/songs/1", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location 'http://localhost:8071/resources'
+#--header 'Content-Type: audio/mpeg'
+#--data '@/C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/bate.mp3'
+POST http://localhost:8071/resources
+Content-Type: audio/mpeg
+
+< /C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/bate.mp3
+
+> {%
+    client.test("POST http://localhost:8071/resources", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location --request DELETE 'http://localhost:8071/resources?id=2'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+DELETE http://localhost:8071/resources?id=2
+Content-Type: audio/mpeg
+
+> {%
+    client.test("DELETE http://localhost:8071/resources?id=2", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###

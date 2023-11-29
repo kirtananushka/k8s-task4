@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:alpine
+          image: postgres:16-alpine3.18
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -32,6 +32,37 @@ spec:
             - name: initdb-resource
               mountPath: /docker-entrypoint-initdb.d/init-resource-svc-db.sql
               subPath: init-resource-svc-db.sql
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -h
+                - localhost
+                - -p
+                - "5432"
+            initialDelaySeconds: 25
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -h
+                - localhost
+                - -p
+                - "5432"
+            initialDelaySeconds: 25
+            periodSeconds: 10
+          startupProbe:
+            exec:
+              command:
+                - pg_isready
+                - -h
+                - localhost
+                - -p
+                - "5432"
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 10
       volumes:
         - name: initdb-resource
           configMap:
@@ -66,7 +97,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:alpine
+          image: postgres:16-alpine3.18
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
@@ -81,6 +112,37 @@ spec:
             - name: initdb-song
               mountPath: /docker-entrypoint-initdb.d/init-song-svc-db.sql
               subPath: init-song-svc-db.sql
+          livenessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -h
+                - localhost
+                - -p
+                - "5432"
+            initialDelaySeconds: 25
+            periodSeconds: 10
+          readinessProbe:
+            exec:
+              command:
+                - pg_isready
+                - -h
+                - localhost
+                - -p
+                - "5432"
+            initialDelaySeconds: 25
+            periodSeconds: 10
+          startupProbe:
+            exec:
+              command:
+                - pg_isready
+                - -h
+                - localhost
+                - -p
+                - "5432"
+            initialDelaySeconds: 20
+            periodSeconds: 5
+            failureThreshold: 10
       volumes:
         - name: initdb-song
           configMap:
