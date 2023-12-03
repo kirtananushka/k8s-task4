@@ -2,13 +2,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: song-svc
-  namespace: ktask
+  name: {{ .Values.songSvc.name }}
+  namespace: {{ .Values.namespace }}
 spec:
-  replicas: 2
+  replicas: {{ .Values.songSvc.replicas }}
   selector:
     matchLabels:
-      app: song-svc
+      app: {{ .Values.songSvc.name }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,15 +17,15 @@ spec:
   template:
     metadata:
       labels:
-        app: song-svc
+        app: {{ .Values.songSvc.name }}
     spec:
       containers:
-        - name: song-svc
-          image: irrisorrimus/song-svc:v1.1
+        - name: {{ .Values.songSvc.name }}
+          image: irrisorrimus/{{ .Values.songSvc.name }}:{{ .Values.songSvc.tag }}
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
-                name: song-svc-db-secret
+                name: {{ .Values.songSvc.name }}-db-secret
           env:
             - name: SONG_SVC_PORT
               valueFrom:

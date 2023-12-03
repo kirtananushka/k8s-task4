@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.resourceSvc.name }}-db-init-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    date: {{ include "labels.currentdate" . }}
+    version: {{ include "labels.version" . }}
+data:
+  init-{{ .Values.resourceSvc.name }}-db.sql: |
+    CREATE DATABASE {{ .Values.resourceSvc.name | replace "-" "_" }}_db;
+    \c {{ .Values.resourceSvc.name | replace "-" "_" }}_db;
+    CREATE TABLE resource
+    (
+        id         SERIAL PRIMARY KEY,
+        audio_data BYTEA NOT NULL
+    );

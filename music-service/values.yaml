@@ -1,0 +1,15 @@
+---
+namespace: ktask
+
+resourceSvc:
+  name: resource-svc
+  tag: v1.2
+  replicas: 2
+songSvc:
+  name: song-svc
+  tag: v1.2
+  replicas: 2
+resourceDb:
+  replicas: 1
+songDb:
+  replicas: 1

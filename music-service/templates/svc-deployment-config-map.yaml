@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-deployment-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    date: {{ include "labels.currentdate" . }}
+    version: {{ include "labels.version" . }}
+data:
+  SONG_SVC_URL: "song-svc"
+  SONG_SVC_PORT: "8080"
+  RESOURCE_SVC_PORT: "8080"

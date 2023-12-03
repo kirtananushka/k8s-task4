@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.songSvc.name }}-db-init-config
+  namespace: {{ .Values.namespace }}
+  labels:
+    date: {{ include "labels.currentdate" . }}
+    version: {{ include "labels.version" . }}
+data:
+  init-{{ .Values.songSvc.name }}-db.sql: |
+    CREATE DATABASE {{ .Values.songSvc.name | replace "-" "_" }}_db;
+    \c {{ .Values.songSvc.name | replace "-" "_" }}_db;
+    CREATE TABLE song
+    (
+        id           SERIAL PRIMARY KEY,
+        resource_id  INT,
+        artist       VARCHAR(255),
+        name         VARCHAR(255),
+        album        VARCHAR(255),
+        release_year VARCHAR(4),
+        duration     VARCHAR(10),
+        genre        VARCHAR(255)
+    );

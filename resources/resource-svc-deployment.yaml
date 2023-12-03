@@ -25,7 +25,7 @@ spec:
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
-                name: resource-db-secret
+                name: resource-svc-db-secret
             - configMapRef:
                 name: app-deployment-config
           ports:

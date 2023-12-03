@@ -1,7 +1,7 @@
-#!/bin/bash
+# !/bin/bash
 
 NAMESPACES=("ktask")
-RESOURCES=("resource-svc" "song-svc" "resource-db" "song-db")
+RESOURCES=("resource-svc" "song-svc" "resource-svc-db" "song-svc-db")
 
 # Check the probe status for each pod
 check_probes() {
