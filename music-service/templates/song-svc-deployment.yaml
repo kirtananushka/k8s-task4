@@ -36,7 +36,7 @@ spec:
             - containerPort: 8080
           readinessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/{{ .Values.songSvc.name }}/health
               port: 8080
             initialDelaySeconds: 50
             periodSeconds: 5
@@ -45,7 +45,7 @@ spec:
             failureThreshold: 3
           livenessProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/{{ .Values.songSvc.name }}/health
               port: 8080
             initialDelaySeconds: 50
             periodSeconds: 10
@@ -53,7 +53,7 @@ spec:
             failureThreshold: 3
           startupProbe:
             httpGet:
-              path: /actuator/health
+              path: /actuator/{{ .Values.songSvc.name }}/health
               port: 8080
             initialDelaySeconds: 40
             periodSeconds: 5

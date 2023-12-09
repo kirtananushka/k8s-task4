@@ -1,0 +1,18 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.resourceSvc.name }}-health-ingress
+  namespace: {{ .Values.namespace }}
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /actuator/{{ .Values.resourceSvc.name }}/health
+            pathType: Exact
+            backend:
+              service:
+                name: {{ .Values.resourceSvc.name }}
+                port:
+                  number: 8080

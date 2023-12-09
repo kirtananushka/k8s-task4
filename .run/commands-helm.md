@@ -1,35 +1,9 @@
-# Task 3
+# Task 4
 
 ## 📀 Install release
 
 ```bash
   helm install music-service-release ../music-service 
-```
-
-## 🌐 Install release to `dev` namespace and decrease replicas to 1
-
-```bash
-  helm install music-service-release ../music-service \
-    --set namespace=dev \
-    --set resourceSvc.replicas=1 \
-    --set songSvc.replicas=1
-```
-
-## 📊 Output information about the namespace and replicas
-
-```bash
-echo
-for namespace in ktask dev; do
-  for resourceType in deployments statefulsets; do
-    kubectl get $resourceType -n $namespace -o jsonpath="{range .items[*]}{'$resourceType\t'}{.metadata.name}{'\tnamespace='}{.metadata.namespace}{'\t\treplicas='}{.spec.replicas}{'\n'}{end}"
-  done
-done | column -t
-```
-
-## 📃 List releases
-
-```bash
-  helm list
 ```
 
 ## 🏥 Check probes
@@ -38,10 +12,10 @@ done | column -t
   ./check-probes.sh
 ```
 
-## ➡️ Port forward
+## ➡️ Port forward for databases
 
 ```bash
-  ./port-forward.sh
+  ./port-forward-db.sh
 ```
 
 ## 🖧 Start proxy
@@ -56,7 +30,7 @@ done | column -t
   cmd.exe //c start chrome "http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/"
 ```
 
-## ⬆️ Upgrade release
+## 🔼 Upgrade release
 
 ```bash
   helm upgrade music-service-release ../music-service
@@ -68,26 +42,14 @@ done | column -t
   helm uninstall music-service-release
 ```
 
------------------
-
-## 🐛 Debug
-
-### ❗ Install debug release
+## ⬇️ Scale down Ingress Controller
 
 ```bash
-  helm install --debug --dry-run music-service-release ../music-service
+kubectl scale deployment -n ingress-nginx ingress-nginx-controller --replicas=0
 ```
 
-### ⚙️ Upgrade debug release
+## ⬆️ Scale up Ingress Controller
 
 ```bash
-  helm upgrade --debug --dry-run music-service-release ../short-service
-```
-  
------------------
-
-## 🏷️ Get Labels
-
-```bash
-  kubectl get configmap app-deployment-config -n ktask -o jsonpath='{.metadata.labels}'
+kubectl scale deployment -n ingress-nginx ingress-nginx-controller --replicas=1
 ```

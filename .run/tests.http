@@ -1,7 +1,7 @@
 ###
 
-# curl --location 'http://localhost:8071'
-GET http://localhost:8071
+# curl --location 'http://music-service/actuator/resource-svc/health'
+GET http://music-service/actuator/resource-svc/health
 
 > {%
     client.test("resource-svc is ok", function() {
@@ -11,19 +11,8 @@ GET http://localhost:8071
 
 ###
 
-# curl --location 'http://localhost:8071/actuator/health'
-GET http://localhost:8071/actuator/health
-
-> {%
-    client.test("resource-svc is UP", function() {
-        client.assert(response.status === 200);
-    });
-%}
-
-###
-
-# curl --location 'http://localhost:8072'
-GET http://localhost:8072
+# curl --location 'http://music-service/actuator/song-svc/health'
+GET http://music-service/actuator/song-svc/health
 
 > {%
     client.test("song-svc is ok", function() {
@@ -33,41 +22,30 @@ GET http://localhost:8072
 
 ###
 
-# curl --location 'http://localhost:8072/actuator/health'
-GET http://localhost:8072/actuator/health
-
-> {%
-    client.test("song-svc is UP", function() {
-        client.assert(response.status === 200);
-    });
-%}
-
-###
-
-# curl --location 'http://localhost:8071/resources'
+# curl --location 'http://music-service/resources'
 #--header 'Content-Type: audio/mpeg'
 #--data '@/C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/across.mp3'
-POST http://localhost:8071/resources
+POST http://music-service/resources
 Content-Type: audio/mpeg
 
 < /C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/across.mp3
 
 > {%
-    client.test("POST http://localhost:8071/resources", function() {
+    client.test("POST /resources", function() {
         client.assert(response.status === 200);
     });
 %}
 
 ###
 
-# curl --location 'http://localhost:8071/resources/1'
+# curl --location 'http://music-service/resources/1'
 #--header 'Content-Type: audio/mpeg'
 #--data ''
-GET http://localhost:8071/resources/1
+GET http://music-service/resources/1
 Content-Type: audio/mpeg
 
 > {%
-    client.test("GET http://localhost:8071/resources/1", function() {
+    client.test("GET /resources/1", function() {
         client.assert(response.status === 200);
         const contentType = response.headers.valueOf("content-type");
         client.assert(contentType == "audio/mpeg",
@@ -77,45 +55,87 @@ Content-Type: audio/mpeg
 
 ###
 
-# curl --location 'http://localhost:8072/songs/1'
+# curl --location 'http://music-service/resources/2'
 #--header 'Content-Type: audio/mpeg'
 #--data ''
-GET http://localhost:8072/songs/1
+GET http://music-service/resources/2
 Content-Type: audio/mpeg
 
 > {%
-    client.test("POST http://localhost:8072/songs/1", function() {
+    client.test("GET /resources/2", function() {
+        client.assert(response.status === 404);
+    });
+%}
+
+###
+
+# curl --location 'http://music-service/songs/1'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+GET http://music-service/songs/1
+Content-Type: audio/mpeg
+
+> {%
+    client.test("POST /songs/1", function() {
         client.assert(response.status === 200);
     });
 %}
 
 ###
 
-# curl --location 'http://localhost:8071/resources'
+# curl --location 'http://music-service/resources'
 #--header 'Content-Type: audio/mpeg'
 #--data '@/C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/bate.mp3'
-POST http://localhost:8071/resources
+POST http://music-service/resources
 Content-Type: audio/mpeg
 
 < /C:/Users/Kir_Tananushka/OneDrive - EPAM/MyTrainings/OpenAPI/mp3/bate.mp3
 
 > {%
-    client.test("POST http://localhost:8071/resources", function() {
+    client.test("POST /resources", function() {
         client.assert(response.status === 200);
     });
 %}
 
 ###
 
-# curl --location --request DELETE 'http://localhost:8071/resources?id=2'
+# curl --location --request DELETE 'http://music-service/resources?id=2'
 #--header 'Content-Type: audio/mpeg'
 #--data ''
-DELETE http://localhost:8071/resources?id=2
+DELETE http://music-service/resources?id=2
 Content-Type: audio/mpeg
 
 > {%
-    client.test("DELETE http://localhost:8071/resources?id=2", function() {
+    client.test("DELETE /resources?id=2", function() {
         client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location --request DELETE 'http://music-service/resources?id=2'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+DELETE http://music-service/resources?id=2
+Content-Type: audio/mpeg
+
+> {%
+    client.test("DELETE /resources?id=2", function() {
+        client.assert(response.status === 200);
+    });
+%}
+
+###
+
+# curl --location 'http://music-service/resources/2'
+#--header 'Content-Type: audio/mpeg'
+#--data ''
+GET http://music-service/resources/2
+Content-Type: audio/mpeg
+
+> {%
+    client.test("GET /resources/2", function() {
+        client.assert(response.status === 404);
     });
 %}
 
